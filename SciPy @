@@ -1,0 +1,90 @@
+import codecademylib
+
+import pandas as pd
+
+df = pd.read_csv('clicks.csv')
+
+print(df.head())
+
+
+import codecademylib
+import pandas as pd
+
+df = pd.read_csv('clicks.csv')
+
+df['is_purchase'] = df.click_day.apply(
+  lambda x: 'Purchase' if pd.notnull(x) else 'No Purchase'
+)
+
+purchase_counts = df.groupby(['group', 'is_purchase'])\
+	.user_id.count().reset_index()
+
+print purchase_counts
+
+
+from scipy.stats import chi2_contingency
+
+contingency = [[316, 1350],
+               [183, 	1483],
+               [83, 1583]]
+
+chi2, pvalue, dof, expected = chi2_contingency(contingency)
+print pvalue
+
+is_significant=  True if pvalue < 0.05  else False
+print is_significant
+
+
+import codecademylib
+import pandas as pd
+
+df = pd.read_csv('clicks.csv')
+print df
+
+num_visits= 4998
+
+num_sales = 1000 / 0.99
+num_sales2 = 1000 / 1.99
+num_sales3 = 1000 / 4.99
+
+p_clicks_099 = num_sales / num_visits
+p_clicks_199 = num_sales2 / num_visits
+p_clicks_499 = num_sales3 / num_visits
+
+print p_clicks_099
+print p_clicks_199
+print p_clicks_499
+
+
+import codecademylib
+import pandas as pd
+
+df = pd.read_csv('clicks.csv')
+
+df['is_purchase'] = df.click_day.apply(
+  lambda x: 'Purchase' if pd.notnull(x) else 'No Purchase'
+)
+
+purchase_counts = df.groupby(['group', 'is_purchase'])\
+	.user_id.count().reset_index()
+
+print purchase_counts
+
+num_visits = len(df)
+
+p_clicks_099 = (1000 / 0.99) / num_visits
+p_clicks_199 = (1000 / 1.99) / num_visits
+p_clicks_499 = (1000 / 4.99) / num_visits
+
+from scipy.stats import binom_test
+
+pvalueA = binom_test(316, 1666, p_clicks_099)
+pvalueB = binom_test(183, 1666, p_clicks_199)
+pvalueC = binom_test(83, 1666, p_clicks_499)
+
+final_answer = 4.99
+
+print pvalueA
+print pvalueB
+print pvalueC
+print num_visits
