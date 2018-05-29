@@ -1,0 +1,35 @@
+import codecademylib
+#1 loading the DataFrame
+import pandas as pd
+inventory=pd.read_csv('inventory.csv')
+#2 inspecting the first 10 rows of inventory
+print(inventory.head(10))
+#3 selecting and saving rows from Staten Island to staten_island
+staten_island = inventory.loc[0:10]
+print(staten_island)
+#4 informing a customer of what products are sold out
+product_request=staten_island.product_description
+print(product_request)
+#5 types of seeds sold in Brooklyn
+seed_request=inventory[(inventory.location == 'Broooklyn')&
+                      (inventory.product_type == 'seeds')]
+print(seed_request)
+#6 adding a column called in stock
+inventory['in_stock']= inventory\
+											.apply(lambda row:\
+                        		 'True'
+                              if row['quantity'] > 0 
+                              else 'False',
+                              axis=1 )
+print(inventory)
+#7 creating a new column
+inventory['total_value']=inventory['price']* inventory['quantity']
+print(inventory) 
+#8 complete description of each product
+combine_lambda = lambda row: \
+  '{} - {}'.format(row.product_type,
+   								 row.product_description)
+print(combine_lambda) 
+#9 new column
+inventory['full_description']=inventory.apply(combine_lambda, axis=1)
+print(inventory)
